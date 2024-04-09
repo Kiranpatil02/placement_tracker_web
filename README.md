@@ -55,13 +55,18 @@ This is a web application for tracking the placement activities of the students 
 ![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/517386a6-e665-463b-957f-10a1e14c6637)
 
 ##### Placements and Students Dashboard
-![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/8900769f-f5e7-4e5e-9d69-041f3fb19af3)
+![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/b2d1f11c-b32d-44bc-bfb2-9455a8d4a6c5)
+![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/483dd3ed-e7ff-4498-801c-d31d8db51083)
+![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/4287f555-b33f-4532-816f-87049f0b0208)
+
+
 ![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/7fa9ba53-ebb9-40a8-b2fb-f3a5aa16951f)
 ![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/4d908615-b383-4b70-b874-1dfede931927)
 
 ##### Companies Dashboard
 ![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/04063844-176a-46d9-b192-91a729a5b275)
-![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/5c51c8af-eb20-4afd-ba87-a8695eb97944)
+![image](https://github.com/Ashrockzzz2003/placement_tracker_web/assets/90165751/c10f5eba-02eb-4c19-8311-42b0c5693ef1)
+
 
 
 #### Student
