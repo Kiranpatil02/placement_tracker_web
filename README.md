@@ -1,5 +1,8 @@
 # Amrita Placement Tracker
 
+<img src="https://img.shields.io/github/created-at/Ashrockzzz2003/placement_tracker_web"/>
+<img src="https://github.com/Ashrockzzz2003/placement_tracker_web/blob/v2/public/logo.png?raw=true" style="width: 280px;" />
+
 ## About
 
 This is a web application for tracking the placement activities of the students of Amrita School of Computing, Coimbatore.
