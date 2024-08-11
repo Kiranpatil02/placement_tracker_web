@@ -1,4 +1,4 @@
-const BASE_URL = `${process.env.NEXT_PUBLIC_URL}/api`;
+const BASE_URL = `${process.env.NEXT_PUBLIC_URL?process.env.NEXT_PUBLIC_URL:"http://localhost:5000"}/api`;
 
 export const LOGIN_URL = BASE_URL + "/login";
 export const REGISTER_URL = BASE_URL + "/studentRegister";
