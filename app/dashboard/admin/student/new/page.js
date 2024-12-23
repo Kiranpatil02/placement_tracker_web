@@ -82,19 +82,19 @@ export default function RegisterStudent() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        // console.log({
-        //     "studentRollNo": studentRollNo,
-        //     "studentEmail": studentEmail,
-        //     "studentName": studentName,
-        //     "studentPassword": hashPassword(studentPassword),
-        //     "studentSection": studentSection,
-        //     "studentGender": studentGender === "Male" ? "M" : studentGender === "Female" ? "F" : "O",
-        //     "studentBatch": studentBatch,
-        //     "studentDept": studentDept,
-        //     "isHigherStudies": isHigherStudies === "Yes" ? "1" : "0",
-        //     "isPlaced": isPlaced,
-        //     "CGPA": CGPA
-        // });
+        console.log({
+            "studentRollNo": studentRollNo,
+            "studentEmail": studentEmail,
+            "studentName": studentName,
+            "studentPassword": hashPassword(studentPassword),
+            "studentSection": studentSection,
+            "studentGender": studentGender === "Male" ? "M" : studentGender === "Female" ? "F" : "O",
+            "studentBatch": studentBatch,
+            "studentDept": studentDept,
+            "isHigherStudies": isHigherStudies === "Yes" ? "1" : "0",
+            "isPlaced": isPlaced,
+            "CGPA": CGPA
+        });
 
         if (!isValid) {
             alertError("Invalid Details", "Please check all the fields and try again.");

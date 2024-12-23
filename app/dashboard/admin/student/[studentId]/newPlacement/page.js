@@ -257,6 +257,7 @@ export default function NewPlacementScreen() {
                         setCompanyName("");
                         setCompanyId(data["companyId"]);
                         alertSuccess("Success", "Company added successfully.");
+                        closeModal();
                     } else {
                         // console.log(data["companyId"]);
                         // console.log(data["companyName"]);
@@ -274,7 +275,7 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                closeModal();
+                
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
