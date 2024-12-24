@@ -23,8 +23,15 @@ export default function NewPlacementScreen() {
     const { placementID } = useParams();
     const p = secureLocalStorage.getItem("studentPlacements");
     const placements = JSON.parse(p);
+    console.log(p)
     const student = JSON.parse(secureLocalStorage.getItem("currentStudent"));
-    //console.log("student",student.studentId,student)
+    if (!student) {
+        console.error("Student data is not available in secure local storage.");
+        // Handle the error, e.g., redirect to another page or show an error message
+        router.replace("/dashboard/admin/student");
+        return null;
+    }
+    //console.log("student",student)
     const [studentId, setStudentId] = useState(student.studentId);
 
     var placement = {};
@@ -108,7 +115,8 @@ export default function NewPlacementScreen() {
 
     const isValidJobRole = jobRole.length > 0;
     const isValidCompanyId = companyId !== null && companyId !== undefined;
-    const isValidJobLocation = jobLocation.length > 0;
+    const isValidJobLocation = jobLocation && jobLocation.length > 0 ? true : false;
+    const jobLocationMessage = isValidJobLocation ? jobLocation : "";
     const isValidPlacementDate = placementDate.length > 0;
     const isValidIntern = isIntern.length > 0 && (isIntern === "Yes" || isIntern === "No");
     const isValidPPO = isPPO.length > 0 && (isPPO === "Yes" || isPPO === "No");
@@ -457,7 +465,7 @@ export default function NewPlacementScreen() {
                                         type="name"
                                         autoComplete="rollno"
                                         placeholder='Enter the location (eg. Bengaluru)'
-                                        value={jobLocation}
+                                        value={jobLocationMessage}
                                         onChange={(e) => {
                                             setJobLocation(e.target.value);
                                         }}

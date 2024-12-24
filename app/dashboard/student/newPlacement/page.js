@@ -265,11 +265,12 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                closeModal();
+                
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
             } finally {
+                closeModal();
                 setIsLoading(false);
             }
         }

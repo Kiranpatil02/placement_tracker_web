@@ -68,6 +68,7 @@ export default function AdminDashboard() {
                 "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
             }
         }).then((res) => {
+            console.log(res);
             if (res.status === 200) {
                 res.json().then((data) => {
                     setTop5Placements(data["placements"]);
@@ -79,7 +80,7 @@ export default function AdminDashboard() {
                     router.replace("/login");
                 }, 3000);
             } else {
-                alertError("Error", "Something went wrong. Please try again later.");
+                alertError("Error", "Something went wrong in fetching top 5 placements. Please try again later.");
             }
         });
 
@@ -141,9 +142,9 @@ export default function AdminDashboard() {
                         alertSuccess("Success", "Company added successfully.");
                         closeModal();
                     } else {
-                        // console.log(data["companyId"]);
-                        // console.log(data["companyName"]);
-                        alertError("Error", "Something went wrong. Please try again later.");
+                        console.log(data["companyId"]);
+                        console.log(data["companyName"]);
+                        alertError("Error", "Something went wrong in adding company. Please try again later.");
                     }
                 } else if (response.status === 401) {
                     secureLocalStorage.clear();
@@ -154,7 +155,7 @@ export default function AdminDashboard() {
                 } else if (data["message"] !== undefined) {
                     alertError("Error", data["message"]);
                 } else {
-                    alertError("Error", "Something went wrong. Please try again later.");
+                    alertError("Error", "Something went wrong in adding company. Please try again later.");
                 }
 
                 
@@ -233,13 +234,13 @@ export default function AdminDashboard() {
                 } else if (data["message"] !== undefined) {
                     alertError("Error", data["message"]);
                 } else {
-                    alertError("Error", "Something went wrong. Please try again later.");
+                    alertError("Error", "Something went wrong in adding official. Please try again later.");
                 }
 
                 closeRegisterOfficalModal();
             } catch (err) {
                 console.log(err);
-                alertError("Error", "Something went wrong. Please try again later.");
+                alertError("Error", "Something went wrong in adding official. Please try again later.");
             } finally {
                 setIsLoading(false);
             }
