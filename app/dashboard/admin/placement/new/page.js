@@ -346,7 +346,7 @@ export default function NewPlacementScreen() {
 
                             <p className="my-8 text-center text-md text-gray-500">
                                 {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                                <button type="button" onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
                             </p>
 
                             <div>
@@ -571,7 +571,7 @@ export default function NewPlacementScreen() {
                                             <div className="mt-4">
                                                 <input
                                                     value={"Add Company"}
-                                                    type="submit"
+                                                    type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={closeModal}
                                                 />
