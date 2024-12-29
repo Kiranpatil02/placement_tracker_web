@@ -1,107 +1,136 @@
-"use client";
+    "use client";
 
-import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
-import { ADD_NEW_COMPANY_URL, STUDENT_EDIT_PLACEMENT_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { Toast } from "primereact/toast";
-import { Fragment, useEffect, useRef, useState } from "react";
-import secureLocalStorage from "react-secure-storage";
-import 'material-icons/iconfont/material-icons.css';
-import { Dropdown } from "primereact/dropdown";
-import Aos from "aos";
-import { Dialog, Transition } from "@headlessui/react";
-import "primereact/resources/primereact.min.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { SelectButton } from "primereact/selectbutton";
-
-export default function NewPlacementScreen() {
-
-    const router = useRouter();
-
-    const { placementID } = useParams();
-    const p = secureLocalStorage.getItem("studentPlacements");
-    const placements = JSON.parse(p);
-    var placement = {};
-    if(placements === null || placements === undefined) {
-        // placement.placementID = null;
-        // placement.companyId = null;
-        // placement.ctc = null;
-        // placement.jobRole = null;
-        // placement.jobLocation = null;
-        // placement.placementDate = null;
-        // placement.isIntern = null;
-        // placement.isPPO = null;
-        // placement.isOnCampus = null;
-        // placement.isGirlsDrive = null;
-        // placement.extraData = null;
-        router.replace("/dashboard/student");
-    }
-    else{
-        placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
-    }
-
-    const [companyList, setCompanyList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [userAccess, setUserAccess] = useState("");
-    let [isOpen, setIsOpen] = useState(false)
-
-    /*
-            "companyId":<companyId> INTEGER,
-            "ctc":<ctc> FLOAT,
-            "jobRole":"<jobRole>",
-            "jobLocation":"<jobLocation>", //Optional
-            "placementDate":"<placementDate>",
-            "isIntern":"<0/1>",
-            "isPPO":"<0/1>",
-            "isOnCampus":"<0/1>",
-            "isGirlsDrive":"<0/1>",
-            "extraData":"<extraData>" //Optional
-    */
-
-    const [companyId, setCompanyId] = useState(placement.companyID);
-    const [ctc, setCtc] = useState(placement.ctc);
-    const [jobRole, setJobRole] = useState(placement.jobRole);
-    const [jobLocation, setJobLocation] = useState(placement.jobLocation);
-    const [placementDate, setPlacementDate] = useState(placement.placementDate.substring(0, 10));
-
-    const internOptions = ["Yes", "No"];
-    const [isIntern, setIsIntern] = useState(placement.isIntern === "1" ? "Yes" : "No");
-
-    const ppoOptions = ["Yes", "No"];
-    const [isPPO, setIsPPO] = useState(placement.isPPO === "1" ? "Yes" : "No");
-
-    const onCampusOptions = ["Yes", "No"];
-    const [isOnCampus, setIsOnCampus] = useState(placement.isOnCampus === "1" ? "Yes" : "No");
-
-    const girlsDriveOptions = ["Yes", "No"];
-    const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
-
-    const [extraData, setExtraData] = useState(placement.extraData);
-
-    //console.log(placement);
-
-    // setCtc(placement.ctc);
-    // setJobRole(placement.jobRole);
-    // setJobLocation(placement.jobLocation);
-    // setPlacementDate(placement.placementDate);
-    // setIsIntern(placement.isIntern === 1 ? "Yes" : "No");
-    // setIsPPO(placement.isPPO === 1 ? "Yes" : "No");
-    // setIsOnCampus(placement.isOnCampus === 1 ? "Yes" : "No");
-    // setIsGirlsDrive(placement.isGirlsDrive === 1 ? "Yes" : "No");
-    // setExtraData(placement.extraData);
+    import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
+    import { ADD_NEW_COMPANY_URL, STUDENT_EDIT_PLACEMENT_URL, GET_COMPANY_LIST_URL } from "@/util/constants";
+    import Image from "next/image";
+    import Link from "next/link";
+    import { useParams, useRouter } from "next/navigation";
+    import { Toast } from "primereact/toast";
+    import { Fragment, useEffect, useRef, useState } from "react";
+    import secureLocalStorage from "react-secure-storage";
+    import 'material-icons/iconfont/material-icons.css';
+    import { Dropdown } from "primereact/dropdown";
+    import Aos from "aos";
+    import { Dialog, Transition } from "@headlessui/react";
+    import "primereact/resources/primereact.min.css";
+    import "primereact/resources/themes/lara-light-indigo/theme.css";
+    import { SelectButton } from "primereact/selectbutton";
 
 
-    // const rollNoRegex = new RegExp("^CB.EN.U4CSE[0-9]{5}$");
-    // const isValidRollNo = rollNoRegex.test(studentRollNo);
+
+    export default function NewPlacementScreen() {
+
+        const router = useRouter();
+
+        const { placementID } = useParams();
+        const p = secureLocalStorage.getItem("studentPlacements");
+        const placements = JSON.parse(p);
+        var placement = {};
+        
+        console.log(placements);
+        useEffect(() => {
+            // This ensures that the redirection happens only on the client side
+            if (placements === null || placements === undefined) {
+                router.replace("/dashboard/student");
+            } else {
+                placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
+                setCompanyId(placement.companyID);
+                setCtc(placement.ctc);
+                setJobRole(placement.jobRole);
+                setJobLocation(placement.jobLocation || "");
+                setPlacementDate(placement.placementDate ? placement.placementDate.substring(0, 10) : "");
+                setIsIntern(placement.isIntern === "1" ? "Yes" : "No");
+                setIsPPO(placement.isPPO === "1" ? "Yes" : "No");
+                setIsOnCampus(placement.isOnCampus === "1" ? "Yes" : "No");
+                setIsGirlsDrive(placement.isGirlsDrive === "1" ? "Yes" : "No");
+                setExtraData(placement.extraData || "");
+
+            }
+        }, [placements, placementID, router]); // Add dependencies for reactivity
+
+        // if(placements === null || placements === undefined) {
+        //     // placement.placementID = null;
+        //     // placement.companyId = null;
+        //     // placement.ctc = null;
+        //     // placement.jobRole = null;
+        //     // placement.jobLocation = null;
+        //     // placement.placementDate = null;
+        //     // placement.isIntern = null;
+        //     // placement.isPPO = null;
+        //     // placement.isOnCampus = null;
+        //     // placement.isGirlsDrive = null;
+        //     // placement.extraData = null;
+        //     router.replace("/dashboard/student");
+        // }
+        // else{
+        //     placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
+        // }
+
+        const [companyList, setCompanyList] = useState([]);
+        const [isLoading, setIsLoading] = useState(true);
+        const [userAccess, setUserAccess] = useState("");
+        let [isOpen, setIsOpen] = useState(false)
+
+        /*
+                "companyId":<companyId> INTEGER,
+                "ctc":<ctc> FLOAT,
+                "jobRole":"<jobRole>",
+                "jobLocation":"<jobLocation>", //Optional
+                "placementDate":"<placementDate>",
+                "isIntern":"<0/1>",
+                "isPPO":"<0/1>",
+                "isOnCampus":"<0/1>",
+                "isGirlsDrive":"<0/1>",
+                "extraData":"<extraData>" //Optional
+        */
+
+        const [companyId, setCompanyId] = useState(placement.companyID);
+        const [ctc, setCtc] = useState(placement.ctc);
+        const [jobRole, setJobRole] = useState(placement.jobRole);
+        const [jobLocation, setJobLocation] = useState(placement.jobLocation);
+        const [placementDate, setPlacementDate] = useState(
+            placement.placementDate ? placement.placementDate.substring(0, 10) : ""
+        );
+        const internOptions = ["Yes", "No"];
+        const [isIntern, setIsIntern] = useState(placement.isIntern === "1" ? "Yes" : "No");
+
+        const ppoOptions = ["Yes", "No"];
+        const [isPPO, setIsPPO] = useState(placement.isPPO === "1" ? "Yes" : "No");
+
+        const onCampusOptions = ["Yes", "No"];
+        const [isOnCampus, setIsOnCampus] = useState(placement.isOnCampus === "1" ? "Yes" : "No");
+
+        const girlsDriveOptions = ["Yes", "No"];
+        const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
+
+        const [extraData, setExtraData] = useState(placement.extraData || "");
+
+        
+
+        //console.log(placement);
+
+        // setCtc(placement.ctc);
+        // setJobRole(placement.jobRole);
+        // setJobLocation(placement.jobLocation);
+        // setPlacementDate(placement.placementDate);
+        // setIsIntern(placement.isIntern === 1 ? "Yes" : "No");
+        // setIsPPO(placement.isPPO === 1 ? "Yes" : "No");
+        // setIsOnCampus(placement.isOnCampus === 1 ? "Yes" : "No");
+        // setIsGirlsDrive(placement.isGirlsDrive === 1 ? "Yes" : "No");
+        // setExtraData(placement.extraData);
+
+
+        // const rollNoRegex = new RegExp("^CB.EN.U4CSE[0-9]{5}$");
+        // const isValidRollNo = rollNoRegex.test(studentRollNo);
 
     const ctcRegex = new RegExp("^[0-9]{1,2}(\\.[0-9]{1,2})?$");
     const isValidCtc = ctcRegex.test(ctc);
 
-    const isValidJobRole = jobRole.length > 0;
+    const isValidJobRole = jobRole && jobRole.length > 0?true:false;
+
     const isValidCompanyId = companyId !== null && companyId !== undefined;
-    const isValidJobLocation = jobLocation.length > 0;
+    const isValidJobLocation = jobLocation && jobLocation.length > 0 ? true : false;
+    const jobLocationMessage = isValidJobLocation ? jobLocation : "";
     const isValidPlacementDate = placementDate.length > 0;
     const isValidIntern = isIntern.length > 0 && (isIntern === "Yes" || isIntern === "No");
     const isValidPPO = isPPO.length > 0 && (isPPO === "Yes" || isPPO === "No");
@@ -396,7 +425,7 @@ export default function NewPlacementScreen() {
 
                             <p className="my-8 text-center text-md text-gray-500">
                                 {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                                <button type="button" onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
                             </p>
 
                             {/* <div>
@@ -625,14 +654,14 @@ export default function NewPlacementScreen() {
                                                 </div>
                                             </div>
 
-                                            <div className="mt-4">
+                                            {/* <div className="mt-4">
                                                 <input
                                                     value={"Add Company"}
-                                                    type="submit"
+                                                    type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={closeModal}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </form>
 
                                     </Dialog.Panel>
