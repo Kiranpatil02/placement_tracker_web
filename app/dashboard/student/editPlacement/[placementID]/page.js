@@ -32,7 +32,13 @@
         
             // This ensures that the redirection happens only on the client side
             if (placements === null || placements === undefined) {
-                router.replace("/dashboard/student");
+                if (typeof window !== "undefined") {
+                    try {
+                        router.replace("/dashboard/student");
+                    } catch (e) {
+                        console.error("Failed to navigate:", e);
+                    }
+                }                
             } else {
                 placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
                 
