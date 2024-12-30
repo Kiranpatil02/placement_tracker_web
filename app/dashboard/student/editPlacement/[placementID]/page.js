@@ -28,7 +28,7 @@
         const placements = JSON.parse(p);
         var placement = {};
         
-        console.log(placements);
+        //console.log(placements);
         
             // This ensures that the redirection happens only on the client side
             if (placements === null || placements === undefined) {
@@ -429,9 +429,9 @@
                                 <div className="mt-2">
                                     <Dropdown
                                         value={companyId} onChange={(e) =>{
-                                            console.log('Company selected:', e.value);
+                                            // console.log('Company selected:', e.value);
                                             setCompanyId(e.value);
-                                            console.log('CompanyId updated:', companyId);
+                                            // console.log('CompanyId updated:', companyId);
                                         }} options={companyList} optionLabel="companyName" optionValue='id'
                                         placeholder="Select the company" className="w-full md:w-14rem" required
                                         filter={true}

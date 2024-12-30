@@ -68,7 +68,6 @@ export default function AdminDashboard() {
                 "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
             }
         }).then((res) => {
-            console.log(res);
             if (res.status === 200) {
                 res.json().then((data) => {
                     setTop5Placements(data["placements"]);
@@ -142,8 +141,8 @@ export default function AdminDashboard() {
                         alertSuccess("Success", "Company added successfully.");
                         closeModal();
                     } else {
-                        console.log(data["companyId"]);
-                        console.log(data["companyName"]);
+                        // console.log(data["companyId"]);
+                        // console.log(data["companyName"]);
                         alertError("Error", "Something went wrong in adding company. Please try again later.");
                     }
                 } else if (response.status === 401) {
