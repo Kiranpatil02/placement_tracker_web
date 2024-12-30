@@ -42,7 +42,7 @@ export default function ForgotPassword() {
 
     const emailRegex = new RegExp(/^[a-zA-Z0-9._-]+@(cb.students.amrita.edu|cb.amrita.edu)$/);
 
-    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com" || userEmail === "hsheadone@gmail.com" || userEmail === "eshwanthkartitr@gmail.com";
+    const isValidEmail = emailRegex.test(userEmail) || userEmail === "ashrockzzz2003@gmail.com" || userEmail === "hsheadone@gmail.com";
 
     const toast = useRef(null);
 
