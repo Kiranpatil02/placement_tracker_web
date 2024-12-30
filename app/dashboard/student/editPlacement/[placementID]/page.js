@@ -1,3 +1,4 @@
+
     "use client";
 
     import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
@@ -28,25 +29,28 @@
         var placement = {};
         
         console.log(placements);
-        useEffect(() => {
+        
             // This ensures that the redirection happens only on the client side
             if (placements === null || placements === undefined) {
                 router.replace("/dashboard/student");
             } else {
                 placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
-                setCompanyId(placement.companyID);
-                setCtc(placement.ctc);
-                setJobRole(placement.jobRole);
-                setJobLocation(placement.jobLocation || "");
-                setPlacementDate(placement.placementDate ? placement.placementDate.substring(0, 10) : "");
-                setIsIntern(placement.isIntern === "1" ? "Yes" : "No");
-                setIsPPO(placement.isPPO === "1" ? "Yes" : "No");
-                setIsOnCampus(placement.isOnCampus === "1" ? "Yes" : "No");
-                setIsGirlsDrive(placement.isGirlsDrive === "1" ? "Yes" : "No");
-                setExtraData(placement.extraData || "");
+                
+                // if (placement && placement.companyID !== companyId) {
+                //     // setCompanyName(placement.companyName);
+                //     // setCtc(placement.ctc);
+                //     // setJobRole(placement.jobRole);
+                //     // setJobLocation(placement.jobLocation || "");
+                //     // setPlacementDate(placement.placementDate ? placement.placementDate.substring(0, 10) : "");
+                //     // setIsIntern(placement.isIntern === "1" ? "Yes" : "No");
+                //     // setIsPPO(placement.isPPO === "1" ? "Yes" : "No");
+                //     // setIsOnCampus(placement.isOnCampus === "1" ? "Yes" : "No");
+                //     // setIsGirlsDrive(placement.isGirlsDrive === "1" ? "Yes" : "No");
+                //     // setExtraData(placement.extraData || "");
+                // }
 
             }
-        }, [placements, placementID, router]); // Add dependencies for reactivity
+        
 
         // if(placements === null || placements === undefined) {
         //     // placement.placementID = null;
@@ -85,6 +89,7 @@
         */
 
         const [companyId, setCompanyId] = useState(placement.companyID);
+        
         const [ctc, setCtc] = useState(placement.ctc);
         const [jobRole, setJobRole] = useState(placement.jobRole);
         const [jobLocation, setJobLocation] = useState(placement.jobLocation);
@@ -104,6 +109,8 @@
         const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
 
         const [extraData, setExtraData] = useState(placement.extraData || "");
+        const [companyName, setCompanyName] = useState(placement.companyName);
+        const isValidCompanyName = companyName && companyName.length > 0 ? true : false;
 
         
 
@@ -288,8 +295,7 @@
         }
     }
 
-    const [companyName, setCompanyName] = useState("");
-    const isValidCompanyName = companyName.length > 0;
+    
 
     const addNewCompany = async (e) => {
         setIsLoading(true);
@@ -416,7 +422,11 @@
                                 <label className="block text-md font-medium leading-6 text-black">Company</label>
                                 <div className="mt-2">
                                     <Dropdown
-                                        value={companyId} onChange={(e) => setCompanyId(e.value || '')} options={companyList} optionLabel="companyName" optionValue='id'
+                                        value={companyId} onChange={(e) =>{
+                                            console.log('Company selected:', e.value);
+                                            setCompanyId(e.value);
+                                            console.log('CompanyId updated:', companyId);
+                                        }} options={companyList} optionLabel="companyName" optionValue='id'
                                         placeholder="Select the company" className="w-full md:w-14rem" required
                                         filter={true}
                                     />

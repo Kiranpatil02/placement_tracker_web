@@ -138,7 +138,7 @@ export default function StudentDashboard() {
         }).finally(() => {
             setIsLoading(false);
         });
-    }, [router]);
+    }, [router,studentId]);
 
 
     return <>
