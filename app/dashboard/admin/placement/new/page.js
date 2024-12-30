@@ -269,7 +269,7 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                
+
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");

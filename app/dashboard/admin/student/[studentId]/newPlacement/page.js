@@ -35,8 +35,8 @@ export default function NewPlacementScreen() {
             "extraData":"<extraData>" //Optional
     */
 
-    const [studentId, setStudentId ] = useState(0);  
-    const [studentRollNo, setStudentRollNo] = useState("");  
+    const [studentId, setStudentId] = useState(0);
+    const [studentRollNo, setStudentRollNo] = useState("");
     const [companyId, setCompanyId] = useState("");
     const [ctc, setCtc] = useState("");
     const [jobRole, setJobRole] = useState("");
@@ -275,7 +275,7 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                
+
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
