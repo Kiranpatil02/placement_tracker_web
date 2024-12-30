@@ -265,11 +265,12 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                closeModal();
+
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
             } finally {
+                closeModal();
                 setIsLoading(false);
             }
         }
@@ -342,7 +343,7 @@ export default function NewPlacementScreen() {
 
                             <p className="my-8 text-center text-md text-gray-500">
                                 {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                                <button type="button" onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
                             </p>
 
                             {/* <div>

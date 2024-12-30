@@ -79,7 +79,7 @@ export default function AdminDashboard() {
                     router.replace("/login");
                 }, 3000);
             } else {
-                alertError("Error", "Something went wrong. Please try again later.");
+                alertError("Error", "Something went wrong in fetching top 5 placements. Please try again later.");
             }
         });
 
@@ -139,10 +139,11 @@ export default function AdminDashboard() {
                     // console.log(data);
                     if (data["companyId"] !== undefined && data["companyName"] !== undefined) {
                         alertSuccess("Success", "Company added successfully.");
+                        closeModal();
                     } else {
                         // console.log(data["companyId"]);
                         // console.log(data["companyName"]);
-                        alertError("Error", "Something went wrong. Please try again later.");
+                        alertError("Error", "Something went wrong in adding company. Please try again later.");
                     }
                 } else if (response.status === 401) {
                     secureLocalStorage.clear();
@@ -153,10 +154,10 @@ export default function AdminDashboard() {
                 } else if (data["message"] !== undefined) {
                     alertError("Error", data["message"]);
                 } else {
-                    alertError("Error", "Something went wrong. Please try again later.");
+                    alertError("Error", "Something went wrong in adding company. Please try again later.");
                 }
 
-                closeModal();
+
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
@@ -232,13 +233,13 @@ export default function AdminDashboard() {
                 } else if (data["message"] !== undefined) {
                     alertError("Error", data["message"]);
                 } else {
-                    alertError("Error", "Something went wrong. Please try again later.");
+                    alertError("Error", "Something went wrong in adding official. Please try again later.");
                 }
 
                 closeRegisterOfficalModal();
             } catch (err) {
                 console.log(err);
-                alertError("Error", "Something went wrong. Please try again later.");
+                alertError("Error", "Something went wrong in adding official. Please try again later.");
             } finally {
                 setIsLoading(false);
             }
@@ -545,7 +546,7 @@ export default function AdminDashboard() {
                                             <div className="mt-4">
                                                 <input
                                                     value={"Add Company"}
-                                                    type="submit"
+                                                    type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={closeModal}
                                                 />

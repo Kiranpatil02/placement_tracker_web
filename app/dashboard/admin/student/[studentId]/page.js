@@ -67,7 +67,7 @@ export default function StudentDashboard() {
         });
     };
 
-    
+
     useEffect(() => {
         setUserAccess(secureLocalStorage.getItem("userAccess"));
         //let student = secureLocalStorage.getItem("currentUser");
@@ -138,7 +138,7 @@ export default function StudentDashboard() {
         }).finally(() => {
             setIsLoading(false);
         });
-    }, [router]);
+    }, [router, studentId]);
 
 
     return <>
@@ -156,7 +156,7 @@ export default function StudentDashboard() {
                             </div>
                             <div className="flex lg:flex lg:flex-1 lg:justify-end">
                                 <Link href={"/dashboard/admin/student"} className="bg-[#000000] text-[#ffffff] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80 cursor-pointer">
-                                <span className="material-icons">supervisor_account</span>
+                                    <span className="material-icons">supervisor_account</span>
                                 </Link>
                                 <button onClick={
                                     () => {
@@ -196,7 +196,7 @@ export default function StudentDashboard() {
                                     {studentName}
                                 </h1>
                                 <p className="mt-4 text-lg leading-7 text-gray-500">
-                                    {studentRollNo} | {studentDept} {studentSection} | {studentBatch} Batch 
+                                    {studentRollNo} | {studentDept} {studentSection} | {studentBatch} Batch
                                 </p>
                                 <div className="hover:cursor-pointer w-fit ml-auto mr-auto">
                                     <Link href={`/dashboard/admin/student/${studentId}/editData`}>
@@ -225,7 +225,7 @@ export default function StudentDashboard() {
                             ) : (
                                 studentPlacements.map((placement, index) => {
                                     return (
-                                        <StudentPlacementCard placementData={placement} key={index} studentId={studentId} cardType={"1"}/>
+                                        <StudentPlacementCard placementData={placement} key={index} studentId={studentId} cardType={"1"} />
                                     )
                                 })
                             )}

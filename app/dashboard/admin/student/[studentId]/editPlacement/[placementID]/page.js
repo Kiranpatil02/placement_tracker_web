@@ -19,40 +19,87 @@ import { SelectButton } from "primereact/selectbutton";
 export default function NewPlacementScreen() {
 
     const router = useRouter();
-
     const { placementID } = useParams();
     const p = secureLocalStorage.getItem("studentPlacements");
     const placements = JSON.parse(p);
     const student = JSON.parse(secureLocalStorage.getItem("currentStudent"));
-    //console.log("student",student.studentId,student)
-    const [studentId, setStudentId] = useState(student.studentId);
 
-    var placement = {};
-    if(placements === null || placements === undefined) {
-        // placement.placementID = null;
-        // placement.companyId = null;
-        // placement.ctc = null;
-        // placement.jobRole = null;
-        // placement.jobLocation = null;
-        // placement.placementDate = null;
-        // placement.isIntern = null;
-        // placement.isPPO = null;
-        // placement.isOnCampus = null;
-        // placement.isGirlsDrive = null;
-        // placement.extraData = null;
-        //console.log("student",student)
-        router.replace(`/dashboard/admin/student/${studentId}`);
-    }
-    else{
-        placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
-    }
-
-    //console.log(student);
-    const [studentRollNo, setStudentRollNo] = useState(student.studentRollNo);
+    const [studentId, setStudentId] = useState(student ? student.studentId : "");
+    const [studentRollNo, setStudentRollNo] = useState(student ? student.studentRollNo : "");
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
-    let [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [companyId, setCompanyId] = useState("");
+    const [ctc, setCtc] = useState("");
+    const [jobRole, setJobRole] = useState("");
+    const [jobLocation, setJobLocation] = useState("");
+    const [placementDate, setPlacementDate] = useState("");
+    const [companyName, setCompanyName] = useState("");
+    const [isIntern, setIsIntern] = useState("No");
+    const [isPPO, setIsPPO] = useState("No");
+    const [isOnCampus, setIsOnCampus] = useState("No");
+    const [isGirlsDrive, setIsGirlsDrive] = useState("No");
+    const [extraData, setExtraData] = useState("");
+    const toast = useRef(null);
+    
+
+    //console.log(student);
+    
+
+    useEffect(() => {
+        if (!student) {
+            console.error("Student data is not available in secure local storage.");
+            router.replace("/dashboard/admin/student");
+            return;
+        }
+
+        const placement = placements ? placements.filter((p) => p.placementID === parseInt(placementID))[0] : {};
+
+        setCompanyId(placement.companyID || "");
+        setCtc(placement.ctc || "");
+        setJobRole(placement.jobRole || "");
+        setJobLocation(placement.jobLocation || "");
+        setPlacementDate(placement.placementDate ? placement.placementDate.substring(0, 10) : "");
+        setIsIntern(placement.isIntern === "1" ? "Yes" : "No");
+        setIsPPO(placement.isPPO === "1" ? "Yes" : "No");
+        setIsOnCampus(placement.isOnCampus === "1" ? "Yes" : "No");
+        setIsGirlsDrive(placement.isGirlsDrive === "1" ? "Yes" : "No");
+        setExtraData(placement.extraData || "");
+
+        setUserAccess(secureLocalStorage.getItem("userAccess"));
+
+        fetch(GET_COMPANY_LIST_URL, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
+            }
+        }).then((res) => {
+            if (res.status === 200) {
+                res.json().then((data) => {
+                    setCompanyList(data["companies"]);
+                });
+            } else if (res.status === 401) {
+                secureLocalStorage.clear();
+                alertError("Session Expired", "Please login again to continue.");
+                setTimeout(() => {
+                    router.replace("/login");
+                }, 3000);
+            } else {
+                alertError("Error", "Something went wrong. Please try again later.");
+            }
+        });
+
+        Aos.init({
+            duration: 500,
+            once: true,
+            easing: 'ease-in-out',
+            delay: 100,
+        });
+
+        setIsLoading(false);
+    }, [router, student, placements, placementID]);
 
     /*
             "companyId":<companyId> INTEGER,
@@ -67,25 +114,7 @@ export default function NewPlacementScreen() {
             "extraData":"<extraData>" //Optional
     */
 
-    const [companyId, setCompanyId] = useState(placement.companyID);
-    const [ctc, setCtc] = useState(placement.ctc);
-    const [jobRole, setJobRole] = useState(placement.jobRole);
-    const [jobLocation, setJobLocation] = useState(placement.jobLocation);
-    const [placementDate, setPlacementDate] = useState(placement.placementDate.substring(0, 10));
-
-    const internOptions = ["Yes", "No"];
-    const [isIntern, setIsIntern] = useState(placement.isIntern === "1" ? "Yes" : "No");
-
-    const ppoOptions = ["Yes", "No"];
-    const [isPPO, setIsPPO] = useState(placement.isPPO === "1" ? "Yes" : "No");
-
-    const onCampusOptions = ["Yes", "No"];
-    const [isOnCampus, setIsOnCampus] = useState(placement.isOnCampus === "1" ? "Yes" : "No");
-
-    const girlsDriveOptions = ["Yes", "No"];
-    const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
-
-    const [extraData, setExtraData] = useState(placement.extraData);
+    
 
     //console.log(placement);
 
@@ -108,7 +137,8 @@ export default function NewPlacementScreen() {
 
     const isValidJobRole = jobRole.length > 0;
     const isValidCompanyId = companyId !== null && companyId !== undefined;
-    const isValidJobLocation = jobLocation.length > 0;
+    const isValidJobLocation = jobLocation && jobLocation.length > 0 ? true : false;
+    const jobLocationMessage = isValidJobLocation ? jobLocation : "";
     const isValidPlacementDate = placementDate.length > 0;
     const isValidIntern = isIntern.length > 0 && (isIntern === "Yes" || isIntern === "No");
     const isValidPPO = isPPO.length > 0 && (isPPO === "Yes" || isPPO === "No");
@@ -117,7 +147,7 @@ export default function NewPlacementScreen() {
 
     const isValidInput = isValidCtc && isValidJobRole && isValidCompanyId && isValidJobLocation && isValidPlacementDate && isValidIntern && isValidPPO && isValidOnCampus && isValidGirlsDrive;
 
-    const toast = useRef(null);
+    
 
     const alertError = (summary, detail) => {
         toast.current.show({
@@ -144,40 +174,7 @@ export default function NewPlacementScreen() {
     }
 
 
-    useEffect(() => {
-        setUserAccess(secureLocalStorage.getItem("userAccess"));
-
-        fetch(GET_COMPANY_LIST_URL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
-            }
-        }).then((res) => {
-            if (res.status === 200) {
-                res.json().then((data) => {
-                    setCompanyList(data["companies"]);
-                });
-            } else if (res.status === 401) {
-                secureLocalStorage.clear();
-                alertError("Session Expired", "Please login again to continue.");
-                setTimeout(() => {
-                    router.replace("/login");
-                }, 3000);
-            } else {
-                alertError("Error", "Something went wrong. Please try again later.");
-            }
-        })
-
-        Aos.init({
-            duration: 500,
-            once: true,
-            easing: 'ease-in-out',
-            delay: 100,
-        });
-
-        setIsLoading(false);
-    }, [router]);
+    
 
 
     const handleEditPlacement = async (e) => {
@@ -268,7 +265,7 @@ export default function NewPlacementScreen() {
         }
     }
 
-    const [companyName, setCompanyName] = useState("");
+    
     const isValidCompanyName = companyName.length > 0;
 
     const addNewCompany = async (e) => {
@@ -311,6 +308,7 @@ export default function NewPlacementScreen() {
                         setCompanyName("");
                         setCompanyId(data["companyId"]);
                         alertSuccess("Success", "Company added successfully.");
+                        closeModal();
                     } else {
                         // console.log(data["companyId"]);
                         // console.log(data["companyName"]);
@@ -328,7 +326,7 @@ export default function NewPlacementScreen() {
                     alertError("Error", "Something went wrong. Please try again later.");
                 }
 
-                closeModal();
+                
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong. Please try again later.");
@@ -405,7 +403,7 @@ export default function NewPlacementScreen() {
 
                             <p className="my-8 text-center text-md text-gray-500">
                                 {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                                <button type="button" onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
                             </p>
 
                             {/* <div>
@@ -456,7 +454,7 @@ export default function NewPlacementScreen() {
                                         type="name"
                                         autoComplete="rollno"
                                         placeholder='Enter the location (eg. Bengaluru)'
-                                        value={jobLocation}
+                                        value={jobLocationMessage}
                                         onChange={(e) => {
                                             setJobLocation(e.target.value);
                                         }}
@@ -637,7 +635,7 @@ export default function NewPlacementScreen() {
                                             <div className="mt-4">
                                                 <input
                                                     value={"Add Company"}
-                                                    type="submit"
+                                                    type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={closeModal}
                                                 />

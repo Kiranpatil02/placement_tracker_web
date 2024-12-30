@@ -16,6 +16,8 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { SelectButton } from "primereact/selectbutton";
 
+
+
 export default function NewPlacementScreen() {
 
     const router = useRouter();
@@ -24,23 +26,54 @@ export default function NewPlacementScreen() {
     const p = secureLocalStorage.getItem("studentPlacements");
     const placements = JSON.parse(p);
     var placement = {};
-    if(placements === null || placements === undefined) {
-        // placement.placementID = null;
-        // placement.companyId = null;
-        // placement.ctc = null;
-        // placement.jobRole = null;
-        // placement.jobLocation = null;
-        // placement.placementDate = null;
-        // placement.isIntern = null;
-        // placement.isPPO = null;
-        // placement.isOnCampus = null;
-        // placement.isGirlsDrive = null;
-        // placement.extraData = null;
-        router.replace("/dashboard/student");
-    }
-    else{
+
+    //console.log(placements);
+
+    // This ensures that the redirection happens only on the client side
+    if (placements === null || placements === undefined) {
+        if (typeof window !== "undefined") {
+            try {
+                router.replace("/dashboard/student");
+            } catch (e) {
+                console.error("Failed to navigate:", e);
+            }
+        }
+    } else {
         placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
+
+        // if (placement && placement.companyID !== companyId) {
+        //     // setCompanyName(placement.companyName);
+        //     // setCtc(placement.ctc);
+        //     // setJobRole(placement.jobRole);
+        //     // setJobLocation(placement.jobLocation || "");
+        //     // setPlacementDate(placement.placementDate ? placement.placementDate.substring(0, 10) : "");
+        //     // setIsIntern(placement.isIntern === "1" ? "Yes" : "No");
+        //     // setIsPPO(placement.isPPO === "1" ? "Yes" : "No");
+        //     // setIsOnCampus(placement.isOnCampus === "1" ? "Yes" : "No");
+        //     // setIsGirlsDrive(placement.isGirlsDrive === "1" ? "Yes" : "No");
+        //     // setExtraData(placement.extraData || "");
+        // }
+
     }
+
+
+    // if(placements === null || placements === undefined) {
+    //     // placement.placementID = null;
+    //     // placement.companyId = null;
+    //     // placement.ctc = null;
+    //     // placement.jobRole = null;
+    //     // placement.jobLocation = null;
+    //     // placement.placementDate = null;
+    //     // placement.isIntern = null;
+    //     // placement.isPPO = null;
+    //     // placement.isOnCampus = null;
+    //     // placement.isGirlsDrive = null;
+    //     // placement.extraData = null;
+    //     router.replace("/dashboard/student");
+    // }
+    // else{
+    //     placement = placements.filter((p) => p.placementID === parseInt(placementID))[0];
+    // }
 
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -61,11 +94,13 @@ export default function NewPlacementScreen() {
     */
 
     const [companyId, setCompanyId] = useState(placement.companyID);
+
     const [ctc, setCtc] = useState(placement.ctc);
     const [jobRole, setJobRole] = useState(placement.jobRole);
     const [jobLocation, setJobLocation] = useState(placement.jobLocation);
-    const [placementDate, setPlacementDate] = useState(placement.placementDate.substring(0, 10));
-
+    const [placementDate, setPlacementDate] = useState(
+        placement.placementDate ? placement.placementDate.substring(0, 10) : ""
+    );
     const internOptions = ["Yes", "No"];
     const [isIntern, setIsIntern] = useState(placement.isIntern === "1" ? "Yes" : "No");
 
@@ -78,7 +113,11 @@ export default function NewPlacementScreen() {
     const girlsDriveOptions = ["Yes", "No"];
     const [isGirlsDrive, setIsGirlsDrive] = useState(placement.isGirlsDrive === "1" ? "Yes" : "No");
 
-    const [extraData, setExtraData] = useState(placement.extraData);
+    const [extraData, setExtraData] = useState(placement.extraData || "");
+    const [companyName, setCompanyName] = useState(placement.companyName);
+    const isValidCompanyName = companyName && companyName.length > 0 ? true : false;
+
+
 
     //console.log(placement);
 
@@ -99,9 +138,11 @@ export default function NewPlacementScreen() {
     const ctcRegex = new RegExp("^[0-9]{1,2}(\\.[0-9]{1,2})?$");
     const isValidCtc = ctcRegex.test(ctc);
 
-    const isValidJobRole = jobRole.length > 0;
+    const isValidJobRole = jobRole && jobRole.length > 0 ? true : false;
+
     const isValidCompanyId = companyId !== null && companyId !== undefined;
-    const isValidJobLocation = jobLocation.length > 0;
+    const isValidJobLocation = jobLocation && jobLocation.length > 0 ? true : false;
+    const jobLocationMessage = isValidJobLocation ? jobLocation : "";
     const isValidPlacementDate = placementDate.length > 0;
     const isValidIntern = isIntern.length > 0 && (isIntern === "Yes" || isIntern === "No");
     const isValidPPO = isPPO.length > 0 && (isPPO === "Yes" || isPPO === "No");
@@ -259,8 +300,7 @@ export default function NewPlacementScreen() {
         }
     }
 
-    const [companyName, setCompanyName] = useState("");
-    const isValidCompanyName = companyName.length > 0;
+
 
     const addNewCompany = async (e) => {
         setIsLoading(true);
@@ -387,7 +427,11 @@ export default function NewPlacementScreen() {
                                 <label className="block text-md font-medium leading-6 text-black">Company</label>
                                 <div className="mt-2">
                                     <Dropdown
-                                        value={companyId} onChange={(e) => setCompanyId(e.value || '')} options={companyList} optionLabel="companyName" optionValue='id'
+                                        value={companyId} onChange={(e) => {
+                                            // console.log('Company selected:', e.value);
+                                            setCompanyId(e.value);
+                                            // console.log('CompanyId updated:', companyId);
+                                        }} options={companyList} optionLabel="companyName" optionValue='id'
                                         placeholder="Select the company" className="w-full md:w-14rem" required
                                         filter={true}
                                     />
@@ -396,7 +440,7 @@ export default function NewPlacementScreen() {
 
                             <p className="my-8 text-center text-md text-gray-500">
                                 {"Can't find the company? "}
-                                <button onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
+                                <button type="button" onClick={openModal} className="font-medium leading-6 text-blue-600 hover:underline">Add Company</button>
                             </p>
 
                             {/* <div>
@@ -625,14 +669,14 @@ export default function NewPlacementScreen() {
                                                 </div>
                                             </div>
 
-                                            <div className="mt-4">
+                                            {/* <div className="mt-4">
                                                 <input
                                                     value={"Add Company"}
-                                                    type="submit"
+                                                    type="button"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={closeModal}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </form>
 
                                     </Dialog.Panel>
