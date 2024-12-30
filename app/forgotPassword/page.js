@@ -169,7 +169,7 @@ export default function ForgotPassword() {
 
             if (response.status === 200) {
                 setResetPasswordToken(data.SECRET_TOKEN);
-                console.log(data);
+                // console.log(data);
 
                 response = await fetch(RESET_PASSWORD_URL, {
                     method: 'POST',
