@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
-import { MANAGER_LOGIN_VERIFY_URL, STUDENT_REGISTER_VERIFY_URL } from "@/util/constants";
+import { MANAGER_LOGIN_VERIFY_URL } from "@/util/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

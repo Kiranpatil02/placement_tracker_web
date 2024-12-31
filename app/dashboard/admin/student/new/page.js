@@ -7,7 +7,7 @@ import { Dropdown } from "primereact/dropdown";
 import { SelectButton } from "primereact/selectbutton";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ADD_NEW_STUDENT_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";
 import { useRouter } from "next/navigation";
