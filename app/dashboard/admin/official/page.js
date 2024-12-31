@@ -4,7 +4,7 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'material-icons/iconfont/material-icons.css';
 import "aos/dist/aos.css";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GET_REGISTERED_OFFICIALS_URL, TOGGLE_ACCOUNT_STATUS_URL } from "@/util/constants";
 import secureLocalStorage from "react-secure-storage";

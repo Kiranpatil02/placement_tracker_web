@@ -112,7 +112,7 @@ export default function AllCompaniesScreen() {
                             return acc;
                         }, {});
 
-                        // sort groupedData by recruiData[0]["ctc"]
+                        // sort groupedData by recruitData[0]["ctc"]
                         const sortedGroupedData = Object.values(groupedData).sort((a, b) => {
                             return b.recruitData[0]["ctc"] - a.recruitData[0]["ctc"];
                         });
@@ -183,7 +183,7 @@ export default function AllCompaniesScreen() {
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal() {

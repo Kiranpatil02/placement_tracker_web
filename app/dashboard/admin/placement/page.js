@@ -422,7 +422,7 @@ export default function AllPlacedStudentsScreen() {
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal() {

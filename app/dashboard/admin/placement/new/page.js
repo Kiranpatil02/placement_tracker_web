@@ -20,7 +20,7 @@ export default function NewPlacementScreen() {
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
-    let [isOpen, setIsOpen] = useState(false)
+    let [isOpen, setIsOpen] = useState(false);
 
     /*
             "studentRollNo":"<studentRollNo>", //Optional for student, Compulsory if manager adds student
@@ -448,7 +448,7 @@ export default function NewPlacementScreen() {
 
                             <div className="flex flex-wrap justify-between">
                                 <div>
-                                    <label className="block text-md font-medium leading-6 text-black">Intership ?</label>
+                                    <label className="block text-md font-medium leading-6 text-black">Internship ?</label>
                                     <div className="mt-2">
                                         <SelectButton value={isIntern} onChange={(e) => {
                                             setIsIntern(e.value || '')

@@ -30,7 +30,7 @@ export default function RegisterStudent() {
     ];
     const [studentSection, setStudentSection] = useState("");
 
-    const genderOptions = ["Male", "Female", "Other"]
+    const genderOptions = ["Male", "Female", "Other"];
     const [studentGender, setStudentGender] = useState("");
     const [studentBatch, setStudentBatch] = useState("");
 
