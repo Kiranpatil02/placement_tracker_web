@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingScreen } from "@/util/LoadingScreen/LoadingScreen";
-import { MANGER_LOGIN_VERFIY_URL, STUDENT_REGISTER_VERIFY_URL } from "@/util/constants";
+import { MANAGER_LOGIN_VERIFY_URL } from "@/util/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ export default function RegisterVerify() {
 
         try {
 
-            const response = await fetch(MANGER_LOGIN_VERFIY_URL, {
+            const response = await fetch(MANAGER_LOGIN_VERIFY_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

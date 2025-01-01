@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import 'material-icons/iconfont/material-icons.css';
-import { ADD_NEW_COMPANY_URL, GET_TOP_5_PLACEMENTS_URL, REGISTER_OFFICAL_URL } from "@/util/constants";
+import { ADD_NEW_COMPANY_URL, GET_TOP_5_PLACEMENTS_URL, REGISTER_OFFICIAL_URL } from "@/util/constants";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Top5PlacementCard from "@/util/Top5PlacementCard";
@@ -182,14 +182,14 @@ export default function AdminDashboard() {
 
     const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
 
-    function closeRegisterOfficalModal() {
-        setRegisterModalIsOpen(false)
+    function closeRegisterOfficialModal() {
+        setRegisterModalIsOpen(false);
     }
 
-    function openRegisterOfficalModal() {
+    function openRegisterOfficialModal() {
         setOfficialName("");
         setOfficialEmail("");
-        setRegisterModalIsOpen(true)
+        setRegisterModalIsOpen(true);
     }
 
     const registerOfficial = async (e) => {
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
             }
 
             try {
-                const response = await fetch(REGISTER_OFFICAL_URL, {
+                const response = await fetch(REGISTER_OFFICIAL_URL, {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + secureLocalStorage.getItem("userAccess"),
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
                     alertError("Error", "Something went wrong in adding official. Please try again later.");
                 }
 
-                closeRegisterOfficalModal();
+                closeRegisterOfficialModal();
             } catch (err) {
                 console.log(err);
                 alertError("Error", "Something went wrong in adding official. Please try again later.");
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
                                             {"All Officials"}
                                         </button>
                                     </Link>
-                                    <button onClick={openRegisterOfficalModal}>
+                                    <button onClick={openRegisterOfficialModal}>
                                         <div className="bg-green-100 text-[#21430e] rounded-xl p-2 items-center align-middle flex flex-row hover:bg-opacity-80">
                                             <span className="material-icons">add</span>
                                         </div>
@@ -398,7 +398,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <Transition appear show={registerModalIsOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={closeRegisterOfficalModal}>
+                    <Dialog as="div" className="relative z-10" onClose={closeRegisterOfficialModal}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -474,7 +474,7 @@ export default function AdminDashboard() {
                                                     disabled={!isValidOfficialEmail || !isValidOfficialName}
                                                     type="submit"
                                                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-                                                    onClick={closeRegisterOfficalModal}
+                                                    onClick={closeRegisterOfficialModal}
                                                 />
                                             </div>
                                         </form>

@@ -20,7 +20,7 @@ export default function NewPlacementScreen() {
     const [companyList, setCompanyList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userAccess, setUserAccess] = useState("");
-    let [isOpen, setIsOpen] = useState(false)
+    let [isOpen, setIsOpen] = useState(false);
 
     /*
             "companyId":<companyId> INTEGER,
@@ -94,11 +94,11 @@ export default function NewPlacementScreen() {
     };
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal() {
-        setIsOpen(true)
+        setIsOpen(true);
     }
 
 
@@ -454,7 +454,7 @@ export default function NewPlacementScreen() {
 
                             <div className="flex flex-wrap justify-between">
                                 <div>
-                                    <label className="block text-md font-medium leading-6 text-black">Intership ?</label>
+                                    <label className="block text-md font-medium leading-6 text-black">Internship ?</label>
                                     <div className="mt-2">
                                         <SelectButton value={isIntern} onChange={(e) => {
                                             setIsIntern(e.value || '')

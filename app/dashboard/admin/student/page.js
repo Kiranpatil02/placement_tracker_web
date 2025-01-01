@@ -183,7 +183,7 @@ export default function AllPlacedStudentsScreen() {
         }).catch((err) => {
             console.log(err);
             alertError("Error", "Something went wrong. Please try again later.");
-        })
+        });
 
         fetch(GET_COMPANY_LIST_URL, {
             method: "GET",
@@ -337,7 +337,7 @@ export default function AllPlacedStudentsScreen() {
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal() {

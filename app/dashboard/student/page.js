@@ -4,7 +4,7 @@ import { GET_STUDENT_PLACEMENTS_URL } from "@/util/constants";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 import secureLocalStorage from "react-secure-storage";
 import 'material-icons/iconfont/material-icons.css';
 import "primereact/resources/primereact.min.css";
